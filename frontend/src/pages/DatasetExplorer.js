@@ -43,18 +43,17 @@ function DatasetExplorer() {
   const handleUploadSuccess = async (success = true) => {
       setFileUploaded(success);
       if(success) {
-         fetchDataPreview(); // Fetch preview right after successful upload
-         // Reset plot states or trigger initial plot loading if desired
+         fetchDataPreview(); 
          setScatterPlotData(null);
          setBoxPlotData(null);
          setDistPlotData(null);
          setCorrPlotData(null);
-         // Optionally trigger loading for the default plot on the first visible tab
+
          if (tabValue === 1) fetchScatterPlot(selectedCategorical);
          if (tabValue === 2) fetchBoxPlot(selectedAberrant);
-         // ... etc
+
       } else {
-        setDataPreview([]); // Clear data if upload failed
+        setDataPreview([]);
       }
   };
 
@@ -78,7 +77,7 @@ function DatasetExplorer() {
       setLoadingScatter(true); setScatterError('');
       try {
           const response = await api.getScatterPlot(variable);
-          setScatterPlotData(response.data); // Expecting Plotly JSON from backend
+          setScatterPlotData(response.data);
       } catch (err) { setScatterError(err.response?.data?.detail || 'Failed to load scatter plot'); }
       finally { setLoadingScatter(false); }
   };

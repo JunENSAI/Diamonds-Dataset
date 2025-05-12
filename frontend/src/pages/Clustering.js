@@ -30,7 +30,7 @@ function Clustering() {
   const [pcaData, setPcaData] = useState(null);
   const [loadingPca, setLoadingPca] = useState(false);
   const [errorPca, setErrorPca] = useState('');
-  const [pcaRun, setPcaRun] = useState(false); // Track if PCA has been successfully run
+  const [pcaRun, setPcaRun] = useState(false); 
 
   // KMeans State
   const [kmeansData, setKmeansData] = useState(null);
@@ -47,11 +47,11 @@ function Clustering() {
     setErrorPca('');
     setPcaRun(false);
     setPcaData(null);
-    setKmeansData(null); // Reset K-Means if PCA is re-run
+    setKmeansData(null);
     try {
       const response = await api.getPcaResults();
       setPcaData(response.data);
-      setPcaRun(true); // Mark PCA as successfully run
+      setPcaRun(true); 
     } catch (err) {
       const errorMsg = err.response?.data?.detail || err.message || 'Failed to fetch PCA results.';
        if (errorMsg.includes("No data loaded yet")) {
@@ -87,11 +87,6 @@ function Clustering() {
     }
   };
 
-  // Optional: Fetch PCA automatically on component mount if needed,
-  // but a button click is often better for resource-intensive tasks.
-  // useEffect(() => {
-  //   fetchPca();
-  // }, []);
 
   return (
     <Box sx={{ width: '100%' }}>

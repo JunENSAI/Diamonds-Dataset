@@ -18,22 +18,21 @@ import {
 } from '@mui/material';
 
 function DataTable({ data, isLoading, error }) {
-  // Dynamically create columns from the keys of the first data object
   const columns = useMemo(() => {
     if (!data || data.length === 0) {
       return [];
     }
-    // Get keys from the first row, assume they are the columns
+
     const keys = Object.keys(data[0]);
     return keys.map(key => ({
       accessorKey: key,
-      header: () => <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>, // Capitalize header
-      cell: info => info.getValue(), // Render the value directly
+      header: () => <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>,
+      cell: info => info.getValue(),
     }));
-  }, [data]); // Re-calculate columns only when data changes
+  }, [data]); 
 
   const table = useReactTable({
-    data: data || [], // Ensure data is always an array
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

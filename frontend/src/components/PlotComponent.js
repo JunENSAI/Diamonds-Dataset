@@ -11,15 +11,14 @@ function PlotComponent({ plotData, loading, error, title }) {
     return <Typography color="error" sx={{mt: 2}}>Error loading plot: {error}</Typography>;
   }
 
-  // Check if plotData is the plotly JSON structure or the { data, layout } object
   let data, layout;
   if (plotData && plotData.data && plotData.layout) {
       data = plotData.data;
       layout = plotData.layout;
   } else {
-      // If API returns just the fig JSON string, parse it (less ideal)
+
       try {
-          const parsed = JSON.parse(plotData); // Assuming plotData is a JSON string from fig.to_json()
+          const parsed = JSON.parse(plotData); 
           data = parsed.data;
           layout = parsed.layout;
       } catch(e) {
@@ -39,7 +38,7 @@ function PlotComponent({ plotData, loading, error, title }) {
         data={data}
         layout={{ ...layout, title: title || layout.title, autosize: true }}
         useResizeHandler={true}
-        style={{ width: '100%', height: '100%' }} // Adjust height as needed
+        style={{ width: '100%', height: '100%' }} 
         config={{ responsive: true }}
       />
     </Box>

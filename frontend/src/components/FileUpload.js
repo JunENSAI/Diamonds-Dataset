@@ -26,12 +26,12 @@ function FileUpload({ onUploadSuccess }) {
       const response = await uploadFile(selectedFile);
       setSuccess(response.data.message || 'File uploaded successfully!');
       if (onUploadSuccess) {
-        onUploadSuccess(); // Notify parent component
+        onUploadSuccess(); 
       }
     } catch (err) {
       setError(err.response?.data?.detail || err.message || 'Upload failed.');
        if (onUploadSuccess) {
-        onUploadSuccess(false); // Notify parent component of failure
+        onUploadSuccess(false); 
       }
     } finally {
       setLoading(false);

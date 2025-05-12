@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import {
     Info, Visibility, Dataset, CheckCircleOutline, AccountTree,
-    Menu as MenuIcon, GitHub, Book
+    Menu as MenuIcon, GitHub
 } from '@mui/icons-material'; // Import icons
 
 // Import Pages
@@ -42,10 +42,9 @@ function App() {
           <ListItem key={item.text} disablePadding component={Link} to={item.path} sx={{
               color: 'inherit',
               textDecoration: 'none',
-              // Apply selected background similar to R Shiny theme examples
               backgroundColor: isSelected ? 'rgba(20,200,235,0.75)' : 'transparent',
-               '&:hover': { // Apply hover effect similar to R Shiny theme examples
-                   backgroundColor: !isSelected ? 'rgba(44,200,235,0.75)' : 'rgba(20,200,235,0.9)', // Slightly darker on hover if selected
+               '&:hover': {
+                   backgroundColor: !isSelected ? 'rgba(44,200,235,0.75)' : 'rgba(20,200,235,0.9)', 
                },
           }}>
             <ListItemButton selected={isSelected}>
@@ -97,14 +96,10 @@ function App() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'rgb(20,20,100)' }}> {/* Title color */}
-              Analyse BD Diamonds (React + FastAPI)
-            </Typography>
+
+             <Box sx={{ flexGrow: 1 }} />
              {/* External Links */}
-             <IconButton sx={{color: 'rgb(25,120,130)'}} href="https://github.com/JrRzf007/Analyse-Dataset-Diamonds---shiny/blob/main/lisez%20moi.pdf" target="_blank" title="Guide">
-                 <Book />
-             </IconButton>
-             <IconButton sx={{color: 'rgb(25,120,130)'}} href="https://github.com/JrRzf007/Analyse-Dataset-Diamonds---shiny" target="_blank" title="GitHub Repo">
+             <IconButton sx={{color: 'rgb(25,120,130)'}} href="https://github.com/JunENSAI/Diamonds-Dataset.git" target="_blank" title="GitHub Repo">
                  <GitHub />
              </IconButton>
           </Toolbar>
@@ -120,7 +115,7 @@ function App() {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: 'block', sm: 'none' },
@@ -144,8 +139,8 @@ function App() {
                     boxSizing: 'border-box',
                     width: drawerWidth,
                     // Basic sidebar styling
-                    background: 'linear-gradient(to bottom, rgb(25,120,130), rgb(25,120,145))', // Sidebar gradient
-                    color: 'white' // Default text/icon color in sidebar
+                    background: 'linear-gradient(to bottom, rgb(25,120,130), rgb(25,120,145))', 
+                    color: 'white' 
                },
             }}
             open
@@ -159,8 +154,8 @@ function App() {
               flexGrow: 1,
               p: 3,
               width: { sm: `calc(100% - ${drawerWidth}px)` },
-              background: '#C6C6C6', // Match body background color from theme
-              minHeight: '100vh' // Ensure background covers full height
+              background: '#C6C6C6', 
+              minHeight: '100vh'
             }}
         >
           <Toolbar /> {/* This Toolbar acts as a spacer below the fixed AppBar */}
@@ -170,7 +165,6 @@ function App() {
             <Route path="/dataset" element={<DatasetExplorer />} />
             <Route path="/predictions" element={<Predictions />} />
             <Route path="/clustering" element={<Clustering />} />
-             {/* Default or fallback route if needed */}
              <Route path="*" element={<About />} /> {/* Or a 404 page */}
           </Routes>
         </Box>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Tabs, Tab, Card, CardMedia, CardContent } from '@mui/material';
 
-// URLs from the original Shiny UI code
+
 const IMAGE_URLS = {
     carat: "https://www.carat.ch/media/full/cache/C/A/CARAT_20_IMAGES_ARTICLES_DIAMANTS_CARAT.jpg",
     color: "https://bijouterielanglois.com/pub/media/wysiwyg/Guide/Couleur_diamant/Couleurs_Diamants.jpg",

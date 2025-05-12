@@ -3,19 +3,17 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from typing import List, Optional
 import pandas as pd
 from io import BytesIO
+import plotly.express as px
 
-# Import processing functions
 import processing
 
 app = FastAPI(title="Diamonds Analysis API")
 
-# --- CORS Middleware (Allow React frontend to access) ---
 from fastapi.middleware.cors import CORSMiddleware
 origins = [
-    "http://localhost:3000", # Default React dev server port
-    "http://127.0.0.1:3000",
-    # Add production frontend URL here if applicable
+    "http://localhost:3000"
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -23,9 +21,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# --------------------------------------------------------
 
-# Store scaled data from PCA for K-Means (again, not robust)
 pca_scaled_data = None
 
 @app.post("/upload")
@@ -51,7 +47,7 @@ async def get_uploaded_data(rows: Optional[int] = Query(100, description="Number
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-# --- Plotting Endpoints ---
+# --- root plots ---
 @app.get("/plot/scatter")
 async def get_scatter_plot(variable: str = Query(..., description="Categorical variable (cut, color, clarity)")):
     """Generates data for a scatter plot of price vs. a categorical variable."""
@@ -97,7 +93,7 @@ async def get_correlation_plot(variables: List[str] = Body(..., description="Lis
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-# --- Prediction Endpoints ---
+# --- root predict ---
 @app.get("/predict")
 async def get_predictions(model_type: str = Query(..., description="Model type (linear, xgboost, randomforest)")):
     """Runs a prediction model and returns results."""
@@ -111,7 +107,6 @@ async def get_predictions(model_type: str = Query(..., description="Model type (
         else:
             raise HTTPException(status_code=400, detail="Invalid model type specified.")
 
-        # Generate plot data for Predicted vs Actual
         fig = px.scatter(results_df, x='Predicted', y='Actual', color='Clarity',
                          title=f'{model_type.capitalize()} Model: Predicted vs Actual Prices',
                          labels={'Predicted': 'Predicted Price ($)', 'Actual': 'Actual Price ($)'})
@@ -141,7 +136,6 @@ async def download_prediction_results(model_type: str = Query(..., description="
         else:
             raise HTTPException(status_code=400, detail="Invalid model type specified.")
 
-        # Create Excel file in memory
         output = BytesIO()
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             results_df[['Actual', 'Predicted']].to_excel(writer, index=False, sheet_name='Predictions')
@@ -157,7 +151,7 @@ async def download_prediction_results(model_type: str = Query(..., description="
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-# --- Clustering Endpoints ---
+# --- root clustering ---
 @app.get("/cluster/pca")
 async def get_pca_results():
     """Performs PCA and returns scree and contribution plot data."""
@@ -193,11 +187,6 @@ async def get_kmeans_results():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-
-# --- Root Endpoint (Optional) ---
 @app.get("/")
 async def read_root():
-    return {"message": "Welcome to the Diamonds Analysis API!"}
-
-# --- To run the server (from the 'backend' directory) ---
-# uvicorn main:app --reload
+    return {"message": "Bienvenu sur l'API de l'analyse de la BD Diamonds"}

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
     Box, Tabs, Tab, Select, MenuItem, InputLabel, FormControl, Button,
-    Typography, CircularProgress, Alert, Grid
+    Typography, CircularProgress, Alert
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import PlotComponent from '../components/PlotComponent';
 import DataTable from '../components/DataTable';
 import * as api from '../services/api';
-import { saveAs } from 'file-saver'; // Import file-saver
+import { saveAs } from 'file-saver'; 
 
 const MODEL_TYPES = [
     { value: 'linear', label: 'Régression Linéaire' },
@@ -43,12 +43,10 @@ function Predictions() {
     const [error, setError] = useState('');
     const [downloading, setDownloading] = useState(false);
     const [downloadError, setDownloadError] = useState('');
-    const [showDataUploadedMessage, setShowDataUploadedMessage] = useState(false); // Track if data is needed
-
+    const [showDataUploadedMessage, setShowDataUploadedMessage] = useState(false); 
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
-        // If switching to the download tab, ensure predictions are loaded for the selected model
         if (newValue === 1 && !predictionData) {
             fetchPredictions(selectedModel);
         }
@@ -56,14 +54,13 @@ function Predictions() {
 
     const handleModelChange = (event) => {
         setSelectedModel(event.target.value);
-        setPredictionData(null); // Clear old data when model changes
+        setPredictionData(null); 
         setError('');
         setDownloadError('');
-         // Fetch new predictions only if on the first tab or if download tab is active
         if (tabValue === 0) {
            fetchPredictions(event.target.value);
         } else if (tabValue === 1) {
-             fetchPredictions(event.target.value); // Also load for download tab if it's active
+             fetchPredictions(event.target.value);
         }
     };
 
@@ -107,13 +104,11 @@ function Predictions() {
         }
     };
 
-    // Fetch data when component mounts or selectedModel changes while on first tab
     useEffect(() => {
-        if (tabValue === 0) { // Only fetch automatically for the main prediction tab
+        if (tabValue === 0) {
              fetchPredictions(selectedModel);
         }
-       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedModel, tabValue]); // Re-fetch if model changes or tab becomes active
+    }, [selectedModel, tabValue]); 
 
 
     const renderPredictionContent = () => (
@@ -131,8 +126,8 @@ function Predictions() {
                     </Typography>
                     <PlotComponent
                         plotData={predictionData.plot_json}
-                        loading={false} // Already handled above
-                        error={null} // Already handled above
+                        loading={false}
+                        error={null} 
                         title={`Prédictions vs Réalité (Couleur par Clarté)`}
                     />
                 </Box>
