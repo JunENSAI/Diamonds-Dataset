@@ -1,0 +1,48 @@
+/* src/index.css */
+
+body {
+  margin: 0; /* Réinitialisation basique */
+  /* Police: Utilise Helvetica si disponible, sinon Arial ou sans-serif comme fallback */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; /* Améliore le rendu des polices */
+  -moz-osx-font-smoothing: grayscale;
+  /* Couleur de fond globale correspondant à celle de la zone principale (bodyBackColor = #C6C6C6) */
+  background-color: #C6C6C6;
+  /* Couleur de police par défaut (appFontColor = rgb(0,0,0)) */
+  color: rgb(0, 0, 0);
+}
+
+/* Optionnel: Assurer que l'élément racine prend toute la hauteur */
+html, body, #root {
+  height: 100%;
+}
+
+/* Optionnel: Réinitialisation plus complète */
+*, *::before, *::after {
+  box-sizing: border-box; /* Méthode de calcul de la taille des boîtes plus intuitive */
+}
+
+/* Optionnel: Style subtil pour la barre de défilement (navigateurs Webkit comme Chrome/Safari/Edge) */
+::-webkit-scrollbar {
+  width: 8px;  /* Largeur de la barre verticale */
+  height: 8px; /* Hauteur de la barre horizontale */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Couleur de fond de la piste */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8; /* Couleur du "pouce" (la partie mobile) */
+  border-radius: 4px; /* Coins arrondis */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Couleur du pouce au survol */
+}
+
+/* Style par défaut pour les éléments `code` si vous en utilisez */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
